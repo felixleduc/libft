@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_format_p.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fleduc <marvin@42quebec.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/30 09:48:37 by fleduc            #+#    #+#             */
-/*   Updated: 2022/05/09 15:09:35 by fleduc           ###   ########.fr       */
+/*   Created: 2022/04/06 15:40:28 by fleduc            #+#    #+#             */
+/*   Updated: 2022/04/27 14:33:15 by fleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+#include "ft_printf.h"
 
-void	*ft_calloc(size_t count, size_t size)
+static void	ft_hexa_mem(unsigned long nb, char *base, int *ret)
 {
-	char	*buffer;
+	if (nb >= 16)
+		ft_hexa_mem(nb / 16, base, ret);
+	ft_putchar(base[nb % 16]);
+	*ret += 1;
+}
 
-	buffer = malloc(count * size);
-	if (buffer == NULL)
-		return (NULL);
-	ft_bzero(buffer, count * size);
-	return (buffer);
+int	ft_format_p(void *pointer)
+{
+	int				ret;
+	unsigned long	num;
+
+	num = (unsigned long) pointer;
+	ret = 0;
+	ft_putstr("0x");
+	ret += 2;
+	ft_hexa_mem(num, "0123456789abcdef", &ret);
+	return (ret);
 }

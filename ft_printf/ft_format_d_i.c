@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_format_d.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fleduc <marvin@42quebec.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/30 09:48:37 by fleduc            #+#    #+#             */
-/*   Updated: 2022/05/09 15:09:35 by fleduc           ###   ########.fr       */
+/*   Created: 2022/04/08 10:52:30 by fleduc            #+#    #+#             */
+/*   Updated: 2022/04/08 11:56:21 by fleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+#include "ft_printf.h"
 
-void	*ft_calloc(size_t count, size_t size)
+int	ft_format_d_i(int nb)
 {
-	char	*buffer;
+	int		n;
+	int		ret;
 
-	buffer = malloc(count * size);
-	if (buffer == NULL)
-		return (NULL);
-	ft_bzero(buffer, count * size);
-	return (buffer);
+	ret = 0;
+	n = nb;
+	if (nb < 0)
+		ret++;
+	else if (nb == 0)
+		ret++;
+	while (nb > 0 || nb < 0)
+	{
+		++ret;
+		nb /= 10;
+	}
+	ft_putnbr_fd(n, 1);
+	return (ret);
 }
